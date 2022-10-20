@@ -20,3 +20,4 @@ class ListAccountByDateView(generics.ListAPIView):
     def get_queryset(self):
         url_num = self.kwargs["num"]
         return self.queryset.order_by("-date_joined")[0:url_num]
+
