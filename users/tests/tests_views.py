@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from rest_framework.views import status
 
-from users.serializers import AccountSerializer
+from users.serializers import AccountSerializer, SellerSerializer
 from users.models import User
 
 
@@ -39,7 +39,7 @@ class TestAccountRegisterView(APITestCase):
         }
 
         cls.user_data4 = {
-            "username": "sandy",
+            # "username": "sandy",
             "password": "1234",
             "first_name": "sandy",
             "last_name": "mattos",
@@ -72,15 +72,16 @@ class TestAccountRegisterView(APITestCase):
         self.assertEqual(response.data["is_seller"], False)
 
     def test_no_possible_create_account_with_wrog_keys(self):
-        seller_response = self.client.post(self.base_url, self.user_data3)
-        seller_serializer = AccountSerializer(data=self.user_data3)
+        seller_response = self.client.post(self.base_url, self.user_data4)
+        seller_serializer = AccountSerializer(data=self.user_data4)
+        seller_serializer.is_valid()
 
         self.assertEqual(seller_response.status_code, 400)
         self.assertEqual(seller_response.data, seller_serializer.errors)
 
     def test_no_possible_create_no_seller_account_with_wrog_keys(self):
         no_seller_response = self.client.post(self.base_url, self.user_data4)
-        seller_serializer = AccountSerializer(data=self.user_data4)
+        seller_serializer = SellerSerializer(data=self.user_data4)
         seller_serializer.is_valid()
 
         self.assertEqual(no_seller_response.status_code, 400)
@@ -178,7 +179,7 @@ class TestUpdateAccountView(APITestCase):
 
     def test_admin_can_deactivate_account(self):
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.admin_token.key)
-        response = self.client.patch(self.update_url, self.data_to_deactivate)
+        response = self.client.patch(self.manager_url, self.data_to_deactivate)
 
         expected_status = status.HTTP_200_OK
         response_status = response.status_code

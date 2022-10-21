@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path("accounts/", views.ListCreateAccountView.as_view(), name="account-register"),
-    path("login/", ObtainAuthToken.as_view()),
+    path("login/", ObtainAuthToken.as_view(), name="login"),
     path(
         "accounts/newest/<int:num>/",
         views.ListAccountByDateView.as_view(),
