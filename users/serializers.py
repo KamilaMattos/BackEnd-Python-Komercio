@@ -37,3 +37,40 @@ class SellerSerializer(serializers.ModelSerializer):
             "is_active",
             "is_superuser",
         ]
+
+
+class AccountUpdateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "is_seller",
+            "date_joined",
+            "is_active",
+            "is_superuser",
+            "password",
+        ]
+        read_only_fields = ["is_active"]
+
+
+class AccountDeactivateSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "is_seller",
+            "date_joined",
+            "is_active",
+            "password",
+        ]
+        extra_kwargs = {"is_active": {"required": True}}
