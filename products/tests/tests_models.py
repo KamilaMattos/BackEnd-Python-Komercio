@@ -27,8 +27,8 @@ class ProductModelTest(TestCase):
             "is_seller": True,
         }
 
-        cls.product = Product.objects.create(**cls.product_data, seller=cls.user)
         cls.user = User.objects.create_user(**cls.user_data)
+        cls.product = Product.objects.create(**cls.product_data, seller=cls.user)
         cls.user2 = User.objects.create_user(**cls.user_data2)
 
     def test_account_fields(self):
