@@ -31,7 +31,7 @@ class UserModelTest(TestCase):
         self.assertEqual(self.user_data["username"], self.user.username)
         self.assertEqual(self.user_data["first_name"], self.user.first_name)
         self.assertEqual(self.user_data["last_name"], self.user.last_name)
-        self.assertEqual(self.user_data["is_selle"], self.user.is_seller)
+        self.assertEqual(self.user_data["is_seller"], self.user.is_seller)
 
     def test_account_fields_param(self):
         user_test = User.objects.get(username="yoshi")
