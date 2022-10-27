@@ -25,5 +25,10 @@ pip install -r requirements.txt
 ```
 ### Execute as migrações
 ```
+# Linux
 ./manage.py migrate
+
+# Windows
+
+python manage.py migrate
 ```
